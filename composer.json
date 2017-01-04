@@ -1,0 +1,21 @@
+{
+    "name": "iainconnor/peace-keeper",
+    "description": "API testing by Annotations.",
+    "type": "library",
+    "require": {
+        "iainconnor/game-maker": "dev-master",
+        "iainconnor/jabber-jay": "dev-master",
+        "iainconnor/mentor": "dev-master",
+        "iainconnor/mocking-jay": "dev-master",
+        "phpunit/phpunit": "^5.7",
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Iain Connor",
+            "email": "iainconnor@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
