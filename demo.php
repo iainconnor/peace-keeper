@@ -73,5 +73,9 @@ $fooController = $gameMaker->parseController(Foo::class);
 
 $strategy = new \CG\Core\DefaultGeneratorStrategy();
 
-$peaceKeeper = new \IainConnor\PeaceKeeper\PeaceKeeper();
-echo $strategy->generate($peaceKeeper->generateTestClassForController($fooController));
+$peaceKeeper = new \IainConnor\PeaceKeeper\PeaceKeeper($gameMaker);
+
+
+foreach ( $peaceKeeper->generateTestClassesForControllers($gameMaker->getParsedControllers()) as $class ) {
+    echo $strategy->generate($class);
+}

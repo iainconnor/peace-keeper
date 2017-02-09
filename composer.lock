@@ -771,12 +771,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "d18ccfeec7bcfaa832debb6b133d673b8c6dcd7f"
+                "reference": "df98b0417b4d5d74514e3d2f34d3077e17772345"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/d18ccfeec7bcfaa832debb6b133d673b8c6dcd7f",
-                "reference": "d18ccfeec7bcfaa832debb6b133d673b8c6dcd7f",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/df98b0417b4d5d74514e3d2f34d3077e17772345",
+                "reference": "df98b0417b4d5d74514e3d2f34d3077e17772345",
                 "shasum": ""
             },
             "require": {
@@ -814,7 +814,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2017-02-08 23:03:00"
+            "time": "2017-02-09 17:43:09"
         },
         {
             "name": "psr/http-message",
