@@ -6,9 +6,9 @@
         "iainconnor/game-maker": "dev-master",
         "iainconnor/jabber-jay": "dev-master",
         "iainconnor/mentor": "dev-master",
-        "iainconnor/mocking-jay": "dev-master",
-        "phpunit/phpunit": "^5.7",
-        "guzzlehttp/guzzle": "^6.2"
+        "guzzlehttp/guzzle": "^6.2",
+        "justinrainbow/json-schema": "^4.1",
+        "jms/cg": "^1.2"
     },
     "license": "MIT",
     "authors": [
@@ -17,5 +17,10 @@
             "email": "iainconnor@gmail.com"
         }
     ],
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "IainConnor\\PeaceKeeper\\": "src/"
+        }
+    }
 }
