@@ -556,12 +556,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/iainconnor/jabber-jay.git",
-                "reference": "88af0f02c6610dc3d5aa5b33aea5367089a221a1"
+                "reference": "f31d9e2847c3c2ec60106f24e812a7abb99973d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/iainconnor/jabber-jay/zipball/88af0f02c6610dc3d5aa5b33aea5367089a221a1",
-                "reference": "88af0f02c6610dc3d5aa5b33aea5367089a221a1",
+                "url": "https://api.github.com/repos/iainconnor/jabber-jay/zipball/f31d9e2847c3c2ec60106f24e812a7abb99973d9",
+                "reference": "f31d9e2847c3c2ec60106f24e812a7abb99973d9",
                 "shasum": ""
             },
             "require": {
@@ -588,7 +588,7 @@
                 }
             ],
             "description": "API mocking and routing by Annotations.",
-            "time": "2017-02-09 21:18:07"
+            "time": "2017-02-09 21:38:10"
         },
         {
             "name": "iainconnor/mentor",
