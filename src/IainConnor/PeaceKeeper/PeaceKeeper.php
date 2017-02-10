@@ -7,9 +7,11 @@ use CG\Core\ClassUtils;
 use CG\Generator\PhpClass;
 use CG\Generator\PhpMethod;
 use CG\Generator\PhpProperty;
+use IainConnor\Cornucopia\Annotations\TypeHint;
 use IainConnor\GameMaker\ControllerInformation;
 use IainConnor\GameMaker\Endpoint;
 use IainConnor\GameMaker\GameMaker;
+use IainConnor\GameMaker\Processors\JsonSchema;
 use IainConnor\JabberJay\JabberJay;
 use IainConnor\PeaceKeeper\Drivers\Driver;
 use IainConnor\PeaceKeeper\Drivers\MethodCall;
@@ -49,7 +51,7 @@ class PeaceKeeper
      */
     public function generateTestClassForController(ControllerInformation $controller) {
         $class = new PhpClass($controller->class . 'Test');
-        $class->setParentClassName('PHPUnit\Framework\TestCase');
+        $class->setParentClassName('\PHPUnit\Framework\TestCase');
 
         $gameMakerProperty = new PhpProperty('gameMaker');
         $gameMakerProperty->setVisibility('protected');
@@ -83,9 +85,9 @@ class PeaceKeeper
         $method->setStatic(true);
 
         $lines = [
-            'static::$gameMaker = ' . GameMaker::class . '::instance();',
+            'static::$gameMaker = \\' . GameMaker::class . '::instance();',
             'static::$controller = static::$gameMaker->parseController("' . addslashes($controller->class) . '");',
-            'static::$jabberJay = ' . JabberJay::class . '::instance(static::$gameMaker);',
+            'static::$jabberJay = \\' . JabberJay::class . '::instance(static::$gameMaker);',
             'static::$jabberJay->addController(static::$controller);'
         ];
 
@@ -108,10 +110,10 @@ class PeaceKeeper
             "}",
             '',
             '// Call endpoint.',
-            '$response = ' . get_class($this->requestDriver) . '::driveRequest(static::$jabberJay, static::$controller, $endpoint, static::$jabberJay->getMockInputsForMethodForEndpoint($endpoint));',
+            '$response = \\' . get_class($this->requestDriver) . '::driveRequest(static::$jabberJay, static::$controller, $endpoint, static::$jabberJay->getMockInputsForMethodForEndpoint($endpoint));',
             '',
             '// Get all the JSON schemas for the controller.',
-            '$jsonSchemaProcessor = new \IainConnor\GameMaker\Processors\JsonSchema("' . addslashes($endpoint->method) . '");',
+            '$jsonSchemaProcessor = new \\' . JsonSchema::class . '("' . addslashes($endpoint->method) . '");',
             '$jsonSchemas = $jsonSchemaProcessor->processController(static::$controller);',
             '',
             '// Locate the matching JSON schema.',
@@ -121,7 +123,7 @@ class PeaceKeeper
             "\t" . 'if ( $response->getStatusCode() == $output->statusCode ) {',
             "\t\t" . 'foreach ( $output->typeHint->types as $type ) {',
             "\t\t\t" . '// JSON schema for output type has to exist.',
-            "\t\t\t" . '$jsonSchemaKey = $type->type == \IainConnor\Cornucopia\Annotations\TypeHint::ARRAY_TYPE ? ($type->genericType . \IainConnor\Cornucopia\Annotations\TypeHint::ARRAY_TYPE_SHORT) : $type->type;',
+            "\t\t\t" . '$jsonSchemaKey = $type->type == \\' . TypeHint::class . '::ARRAY_TYPE ? ($type->genericType . \\' . TypeHint::class . '::ARRAY_TYPE_SHORT) : $type->type;',
             "\t\t\t" . 'if ( array_key_exists($jsonSchemaKey, $jsonSchemas) ) {',
             "\t\t\t\t" . '$jsonSchema = $jsonSchemas[$jsonSchemaKey];',
             "\t\t\t\t" . '$validator = new JsonSchema\Validator();',
