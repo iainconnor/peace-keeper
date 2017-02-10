@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class IntegrationTest extends Driver
 {
     /**
-     * Drive a request for the given inputs to the given endpoint.
+     * Drive a request for the given inputs to the given endpoint by resolving the URI for that endpoint and sending a Request through JabberJay's middleware.
      * Return that endpoint's response.
      *
      * @param JabberJay $jabberJay
@@ -24,7 +24,7 @@ class IntegrationTest extends Driver
     public static function driveRequest(JabberJay $jabberJay, ControllerInformation $controller, Endpoint $endpoint, array $inputs)
     {
 
-        return $jabberJay->
+        return $jabberJay->performRequest($jabberJay->getMockRequestForEndpoint($endpoint, $inputs));
     }
 
 }

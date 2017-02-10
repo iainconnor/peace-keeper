@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 class UnitTest extends Driver
 {
     /**
-     * Drive a request for the given inputs to the given endpoint.
+     * Drive a request for the given inputs to the given endpoint by calling that method directly.
      * Return that endpoint's response.
      *
      * @param JabberJay $jabberJay

@@ -73,7 +73,7 @@ $fooController = $gameMaker->parseController(Foo::class);
 
 $strategy = new \CG\Core\DefaultGeneratorStrategy();
 
-$peaceKeeper = new \IainConnor\PeaceKeeper\PeaceKeeper($gameMaker);
+$peaceKeeper = new \IainConnor\PeaceKeeper\PeaceKeeper($gameMaker, new \IainConnor\PeaceKeeper\Drivers\UnitTest());
 
 
 foreach ( $peaceKeeper->generateTestClassesForControllers($gameMaker->getParsedControllers()) as $class ) {
