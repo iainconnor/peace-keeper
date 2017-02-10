@@ -13,6 +13,7 @@ use IainConnor\GameMaker\Endpoint;
 use IainConnor\GameMaker\GameMaker;
 use IainConnor\GameMaker\Processors\JsonSchema;
 use IainConnor\JabberJay\JabberJay;
+use IainConnor\MockingJay\MockingJay;
 use IainConnor\PeaceKeeper\Drivers\Driver;
 use IainConnor\PeaceKeeper\Drivers\MethodCall;
 use PhpParser\Builder\Method;
@@ -53,6 +54,12 @@ class PeaceKeeper
         $class = new PhpClass($controller->class . 'Test');
         $class->setParentClassName('\PHPUnit\Framework\TestCase');
 
+        $mockingJayProperty = new PhpProperty('mockingJay');
+        $mockingJayProperty->setVisibility('protected');
+        $mockingJayProperty->setStatic(true);
+
+        $class->setProperty($mockingJayProperty);
+
         $gameMakerProperty = new PhpProperty('gameMaker');
         $gameMakerProperty->setVisibility('protected');
         $gameMakerProperty->setStatic(true);
@@ -85,6 +92,7 @@ class PeaceKeeper
         $method->setStatic(true);
 
         $lines = [
+            'static::$mockingJay = \\' . MockingJay::class . '::instance();',
             'static::$gameMaker = \\' . GameMaker::class . '::instance();',
             'static::$controller = static::$gameMaker->parseController("' . addslashes($controller->class) . '");',
             'static::$jabberJay = \\' . JabberJay::class . '::instance(static::$gameMaker);',
@@ -126,7 +134,7 @@ class PeaceKeeper
             "\t\t\t" . '$jsonSchemaKey = $type->type == \\' . TypeHint::class . '::ARRAY_TYPE ? ($type->genericType . \\' . TypeHint::class . '::ARRAY_TYPE_SHORT) : $type->type;',
             "\t\t\t" . 'if ( array_key_exists($jsonSchemaKey, $jsonSchemas) ) {',
             "\t\t\t\t" . '$jsonSchema = $jsonSchemas[$jsonSchemaKey];',
-            "\t\t\t\t" . '$validator = new JsonSchema\Validator();',
+            "\t\t\t\t" . '$validator = new \JsonSchema\Validator();',
             "\t\t\t\t" . '$validator->check(json_decode($response->getContent()), $jsonSchema);',
             "\t\t\t\t" . 'if ( $validator->isValid() ) {',
             "\t\t\t\t\t" . '$foundValidSchema = true;',
