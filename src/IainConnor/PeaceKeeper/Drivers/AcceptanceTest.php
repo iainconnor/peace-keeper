@@ -52,7 +52,7 @@ class AcceptanceTest extends Driver
             }
         }
 
-        $guzzleResponse = $client->request(GameMaker::getAfterLastSlash($endpoint->httpMethod), $symfonyRequest->getUri(), $requestParams);
+        $guzzleResponse = $client->request(GameMaker::getAfterLastSlash(get_class($endpoint->httpMethod)), $symfonyRequest->getUri(), $requestParams);
 
         return new JsonResponse($guzzleResponse->getBody()->getContents(), $guzzleResponse->getStatusCode(), $guzzleResponse->getHeaders());
     }
