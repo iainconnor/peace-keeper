@@ -34,11 +34,19 @@ class PeaceKeeper
         $this->requestDriver = $requestDriver;
     }
 
+    /**
+     * @param ControllerInformation[] $controllers
+     * @return PhpClass[]
+     */
     public function generateTestClassesForControllers(array $controllers) {
 
         return array_map([$this, "generateTestClassForController"], $controllers);
     }
 
+    /**
+     * @param ControllerInformation $controller
+     * @return PhpClass
+     */
     public function generateTestClassForController(ControllerInformation $controller) {
         $class = new PhpClass($controller->class . 'Test');
         $class->setParentClassName('PHPUnit\Framework\TestCase');
@@ -113,7 +121,7 @@ class PeaceKeeper
             "\t" . 'if ( $response->getStatusCode() == $output->statusCode ) {',
             "\t\t" . 'foreach ( $output->typeHint->types as $type ) {',
             "\t\t\t" . '// JSON schema for output type has to exist.',
-            "\t\t\t" . '$jsonSchemaKey = $type->type == \IainConnor\Cornucopia\Annotations\TypeHint::ARRAY_TYPE ? ($type->genericType . \IainConnor\Cornucopia\Annotations\TypeHint::ARRAY_TYPE_SHORT) : $type->type',
+            "\t\t\t" . '$jsonSchemaKey = $type->type == \IainConnor\Cornucopia\Annotations\TypeHint::ARRAY_TYPE ? ($type->genericType . \IainConnor\Cornucopia\Annotations\TypeHint::ARRAY_TYPE_SHORT) : $type->type;',
             "\t\t\t" . 'if ( array_key_exists($jsonSchemaKey, $jsonSchemas) ) {',
             "\t\t\t\t" . '$jsonSchema = $jsonSchemas[$jsonSchemaKey];',
             "\t\t\t\t" . '$validator = new JsonSchema\Validator();',

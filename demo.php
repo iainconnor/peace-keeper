@@ -1,62 +1,8 @@
 <?php
 
 include(dirname(__FILE__) . "/vendor/autoload.php");
-
-const MY_API_PATH = "/rest_api";
-
-/**
- * A demo class.
- *
- * You can define a root path for your API.
- * @\IainConnor\GameMaker\Annotations\API(path=MY_API_PATH)
- *
- * You can define a root path for a specific controller.
- * You can optionally ignore merging this with the parent annotation above.
- * @\IainConnor\GameMaker\Annotations\Controller(path="/foo")
- *
- * @\IainConnor\GameMaker\Annotations\OutputWrapper(class="OutputWrapper", property="data")
- */
-class Foo {
-    /**
-     * A method.
-     *
-     * @\IainConnor\GameMaker\Annotations\GET(path="/sit/{fizz}")
-     *
-     * By default, inputs are sourced from the most likely place given the HTTP method.
-     * For example, GET's come from query parameters, POST's come from post body, etc.
-     * This can be overridden.
-     * @\IainConnor\GameMaker\Annotations\Input(in="HEADER")
-     * @param string $foo A string.
-     *
-     * The names the input referred to as by the HTTP call can also be customized.
-     * For array types, you can customize how the multiple values are input.
-     * @\IainConnor\GameMaker\Annotations\Input(name="custom_name", arrayFormat="CSV")
-     * @param string[] $bar An array of strings.
-     *
-     * @param int $fizz An integer.
-     *
-     * Inputs can be type-hinted as one of a set of possible values.
-     * Inputs are required unless defaulted or type-hinted as null.
-     * @\IainConnor\GameMaker\Annotations\Input(enum={"yes", "no"})
-     * @param null|string $baz An optional stringey boolean.
-     *
-     * @return string[]
-     */
-    public function bar($foo, array $bar, $fizz, $baz = null) {
-
-    }
-}
-
-class OutputWrapper {
-    /** @var array */
-    public $data;
-
-    /** @var string[] */
-    public $errors = [];
-
-    /** @var string[] */
-    public $messages = [];
-}
+include(dirname(__FILE__) . "/demo/Foo.php");
+include(dirname(__FILE__) . "/demo/OutputWrapper.php");
 
 $gameMaker = \IainConnor\GameMaker\GameMaker::instance();
 
@@ -75,7 +21,13 @@ $strategy = new \CG\Core\DefaultGeneratorStrategy();
 
 $peaceKeeper = new \IainConnor\PeaceKeeper\PeaceKeeper($gameMaker, new \IainConnor\PeaceKeeper\Drivers\UnitTest());
 
-
 foreach ( $peaceKeeper->generateTestClassesForControllers($gameMaker->getParsedControllers()) as $class ) {
-    echo $strategy->generate($class);
+    $testClass = dirname(__FILE__) . DIRECTORY_SEPARATOR . "demo" . DIRECTORY_SEPARATOR . $class->getName() . ".php";
+
+    file_put_contents($testClass, "<?php" . PHP_EOL . "include(\"" . dirname(__FILE__) . DIRECTORY_SEPARATOR . "demo" . DIRECTORY_SEPARATOR . "Foo.php\");" . PHP_EOL . "include(\"" . dirname(__FILE__) . DIRECTORY_SEPARATOR . "demo" . DIRECTORY_SEPARATOR . "OutputWrapper.php\");" . PHP_EOL . $strategy->generate($class));
+
+    echo "Testing " . $class->getShortName() . PHP_EOL;
+    exec(dirname(__FILE__)  . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "bin" . DIRECTORY_SEPARATOR . "phpunit " . $testClass . " --bootstrap " . dirname(__FILE__)  . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php", $output);
+    echo join(PHP_EOL, $output);
+    echo PHP_EOL;
 }
