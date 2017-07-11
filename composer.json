@@ -3,9 +3,8 @@
     "description": "API testing by Annotations.",
     "type": "library",
     "require": {
-        "iainconnor/game-maker": "dev-master",
-        "iainconnor/jabber-jay": "dev-master",
-        "iainconnor/mentor": "dev-master",
+        "iainconnor/game-maker": "^1.0",
+        "iainconnor/jabber-jay": "^1.0",
         "guzzlehttp/guzzle": "^6.2",
         "justinrainbow/json-schema": "^4.1",
         "jms/cg": "^1.2"
