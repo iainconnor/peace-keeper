@@ -9,9 +9,9 @@ class FooTest extends \PHPUnit\Framework\TestCase
 
     public static function setUpBeforeClass()
     {
-        static::$gameMaker = IainConnor\GameMaker\GameMaker::instance();
+        static::$gameMaker = \IainConnor\GameMaker\GameMaker::instance();
         static::$controller = static::$gameMaker->parseController("Foo");
-        static::$jabberJay = IainConnor\JabberJay\JabberJay::instance(static::$gameMaker);
+        static::$jabberJay = \IainConnor\JabberJay\JabberJay::instance(static::$gameMaker);
         static::$jabberJay->addController(static::$controller);
     }
 
@@ -27,7 +27,7 @@ class FooTest extends \PHPUnit\Framework\TestCase
         }
 
         // Call endpoint.
-        $response = IainConnor\PeaceKeeper\Drivers\UnitTest::driveRequest(static::$jabberJay, static::$controller, $endpoint, static::$jabberJay->getMockInputsForMethodForEndpoint($endpoint));
+        $response = \IainConnor\PeaceKeeper\Drivers\UnitTest::driveRequest(static::$jabberJay, static::$controller, $endpoint, static::$jabberJay->getMockInputsForMethodForEndpoint($endpoint));
 
         // Get all the JSON schemas for the controller.
         $jsonSchemaProcessor = new \IainConnor\GameMaker\Processors\JsonSchema("bar");
