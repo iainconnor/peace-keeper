@@ -3,12 +3,14 @@ include("/Users/iconnor/Documents/PHP/hunger-games/peace-keeper/demo/Foo.php");
 include("/Users/iconnor/Documents/PHP/hunger-games/peace-keeper/demo/OutputWrapper.php");
 class FooTest extends \PHPUnit\Framework\TestCase
 {
+    protected static $mockingJay;
     protected static $jabberJay;
     protected static $gameMaker;
     protected static $controller;
 
     public static function setUpBeforeClass()
     {
+        static::$mockingJay = \IainConnor\MockingJay\MockingJay::instance();
         static::$gameMaker = \IainConnor\GameMaker\GameMaker::instance();
         static::$controller = static::$gameMaker->parseController("Foo");
         static::$jabberJay = \IainConnor\JabberJay\JabberJay::instance(static::$gameMaker);
@@ -43,7 +45,7 @@ class FooTest extends \PHPUnit\Framework\TestCase
         			$jsonSchemaKey = $type->type == \IainConnor\Cornucopia\Annotations\TypeHint::ARRAY_TYPE ? ($type->genericType . \IainConnor\Cornucopia\Annotations\TypeHint::ARRAY_TYPE_SHORT) : $type->type;
         			if ( array_key_exists($jsonSchemaKey, $jsonSchemas) ) {
         				$jsonSchema = $jsonSchemas[$jsonSchemaKey];
-        				$validator = new JsonSchema\Validator();
+                        $validator = new \JsonSchema\Validator();
         				$validator->check(json_decode($response->getContent()), $jsonSchema);
         				if ( $validator->isValid() ) {
         					$foundValidSchema = true;
